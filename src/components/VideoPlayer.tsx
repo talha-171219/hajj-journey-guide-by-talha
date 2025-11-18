@@ -84,11 +84,21 @@ export const VideoPlayer = ({ thumbnailUrl, title, onProgress }: VideoPlayerProp
 
         {/* Playing Indicator */}
         {isPlaying && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center text-white space-y-4 p-8">
-              <div className="text-7xl animate-float">🕋</div>
-              <p className="text-2xl font-bold drop-shadow-lg">{title}</p>
-              <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto" />
+          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-black/40 via-primary/20 to-black/40">
+            <div className="text-center text-white space-y-6 p-8 bg-black/30 backdrop-blur-sm rounded-2xl border border-white/10">
+              <div className="relative">
+                <div className="text-7xl animate-float">🕋</div>
+                <div className="absolute inset-0 animate-ping opacity-20">🕋</div>
+              </div>
+              <p className="text-2xl font-bold drop-shadow-lg bg-gradient-to-r from-accent via-white to-accent bg-clip-text text-transparent">
+                {title}
+              </p>
+              <div className="flex items-center justify-center gap-2">
+                <div className="w-3 h-3 bg-accent rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                <div className="w-3 h-3 bg-accent rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                <div className="w-3 h-3 bg-accent rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+              </div>
+              <p className="text-sm text-white/80 animate-pulse">3D Simulation Playing...</p>
             </div>
           </div>
         )}
