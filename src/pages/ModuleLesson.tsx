@@ -89,12 +89,11 @@ const ModuleLesson = () => {
             </div>
 
             {currentStep === 'video' && (
-            <VideoPlayer
-              thumbnailUrl={thumbnails[moduleId || 'intro']}
-              title={t(`module_${moduleId}`)}
-              moduleId={moduleId}
-              onProgress={handleVideoProgress}
-            />
+              <VideoPlayer
+                thumbnailUrl={thumbnails[moduleId || 'intro']}
+                title={t(`module_${moduleId}`)}
+                onProgress={handleVideoProgress}
+              />
             )}
 
             {currentStep === 'task' && moduleId && (

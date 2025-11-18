@@ -3,16 +3,14 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Play, Pause, Volume2, VolumeX, Maximize, RotateCcw } from 'lucide-react';
-import { ThreeScene } from './ThreeScene';
 
 interface VideoPlayerProps {
   thumbnailUrl: string;
   title: string;
-  moduleId?: string;
   onProgress?: (percentage: number) => void;
 }
 
-export const VideoPlayer = ({ thumbnailUrl, title, moduleId = 'intro', onProgress }: VideoPlayerProps) => {
+export const VideoPlayer = ({ thumbnailUrl, title, onProgress }: VideoPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [volume, setVolume] = useState(100);
@@ -84,10 +82,14 @@ export const VideoPlayer = ({ thumbnailUrl, title, moduleId = 'intro', onProgres
           </div>
         )}
 
-        {/* 3D Scene - when playing */}
+        {/* Playing Indicator */}
         {isPlaying && (
-          <div className="absolute inset-0">
-            <ThreeScene moduleId={moduleId} progress={progress} />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center text-white space-y-4 p-8">
+              <div className="text-7xl animate-float">🕋</div>
+              <p className="text-2xl font-bold drop-shadow-lg">{title}</p>
+              <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto" />
+            </div>
           </div>
         )}
 

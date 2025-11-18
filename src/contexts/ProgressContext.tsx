@@ -36,13 +36,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const saved = localStorage.getItem('hajj_progress');
     if (saved) {
       try {
-        const parsed = JSON.parse(saved);
-        // Convert lastAccessed strings back to Date objects
-        const modulesWithDates = parsed.map((m: ModuleProgress) => ({
-          ...m,
-          lastAccessed: m.lastAccessed ? new Date(m.lastAccessed) : undefined,
-        }));
-        setModules(modulesWithDates);
+        setModules(JSON.parse(saved));
       } catch (e) {
         console.error('Failed to parse progress data');
       }
