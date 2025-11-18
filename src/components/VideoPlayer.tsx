@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Play, Pause, Volume2, VolumeX, Maximize, RotateCcw } from 'lucide-react';
-import { VideoSimulation } from './VideoSimulation';
+import { ThreeScene } from './ThreeScene';
 
 interface VideoPlayerProps {
   thumbnailUrl: string;
@@ -84,9 +84,11 @@ export const VideoPlayer = ({ thumbnailUrl, title, moduleId = 'intro', onProgres
           </div>
         )}
 
-        {/* Video Simulation - when playing */}
+        {/* 3D Scene - when playing */}
         {isPlaying && (
-          <VideoSimulation moduleId={moduleId} progress={progress} />
+          <div className="absolute inset-0">
+            <ThreeScene moduleId={moduleId} progress={progress} />
+          </div>
         )}
 
         {/* Controls Bar */}
