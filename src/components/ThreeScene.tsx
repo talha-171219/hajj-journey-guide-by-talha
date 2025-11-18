@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { KaabaScene } from './3d-scenes/KaabaScene';
+import * as THREE from 'three';
+import { RealisticKaabaScene } from './3d-scenes/RealisticKaabaScene';
 import { TawafScene } from './3d-scenes/TawafScene';
 import { SaiScene } from './3d-scenes/SaiScene';
 import { ArafatScene } from './3d-scenes/ArafatScene';
@@ -15,7 +16,7 @@ interface ThreeSceneProps {
 const SceneSelector = ({ moduleId, progress }: ThreeSceneProps) => {
   switch (moduleId) {
     case 'intro':
-      return <KaabaScene progress={progress} />;
+      return <RealisticKaabaScene progress={progress} />;
     case 'ihram':
       return <IhramScene progress={progress} />;
     case 'tawaf':
@@ -27,9 +28,9 @@ const SceneSelector = ({ moduleId, progress }: ThreeSceneProps) => {
     case 'muzdalifah':
       return <MuzdalifahScene progress={progress} />;
     case 'completion':
-      return <KaabaScene progress={progress} />;
+      return <RealisticKaabaScene progress={progress} />;
     default:
-      return <KaabaScene progress={progress} />;
+      return <RealisticKaabaScene progress={progress} />;
   }
 };
 
@@ -38,8 +39,13 @@ export const ThreeScene = ({ moduleId, progress }: ThreeSceneProps) => {
     <div className="w-full h-full bg-gradient-to-br from-sky-200 via-amber-50 to-orange-100">
       <Canvas
         shadows
-        camera={{ position: [0, 5, 15], fov: 50 }}
-        gl={{ antialias: true, alpha: false }}
+        camera={{ position: [0, 6, 15], fov: 50 }}
+        gl={{ 
+          antialias: true, 
+          alpha: false,
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 1.2
+        }}
       >
         <Suspense
           fallback={
