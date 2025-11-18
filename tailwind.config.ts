@@ -57,6 +57,11 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        "islamic-gold": "hsl(var(--islamic-gold))",
+        "islamic-green": "hsl(var(--islamic-green))",
+        "islamic-green-light": "hsl(var(--islamic-green-light))",
+        "desert-sand": "hsl(var(--desert-sand))",
+        "kaaba-black": "hsl(var(--kaaba-black))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -84,6 +89,46 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in": "fade-in 0.5s ease-out",
+        "slide-up": "slide-up 0.4s ease-out",
+        "float": "float 3s ease-in-out infinite",
+        "glow": "glow 2s ease-in-out infinite",
+      },
+      keyframes: {
+        ...{
+          "accordion-down": {
+            from: {
+              height: "0",
+            },
+            to: {
+              height: "var(--radix-accordion-content-height)",
+            },
+          },
+          "accordion-up": {
+            from: {
+              height: "var(--radix-accordion-content-height)",
+            },
+            to: {
+              height: "0",
+            },
+          },
+        },
+        "fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        "slide-up": {
+          "0%": { transform: "translateY(20px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        "float": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        "glow": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.6" },
+        },
       },
     },
   },
