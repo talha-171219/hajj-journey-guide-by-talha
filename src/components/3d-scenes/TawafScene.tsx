@@ -45,9 +45,10 @@ export const TawafScene = ({ progress }: { progress: number }) => {
 
   return (
     <>
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[10, 15, 5]} intensity={1.2} castShadow />
-      <pointLight position={[0, 10, 0]} intensity={0.8} color="#CFA24F" />
+      <ambientLight intensity={1.5} />
+      <directionalLight position={[10, 15, 5]} intensity={2.5} castShadow />
+      <pointLight position={[0, 10, 0]} intensity={1.5} color="#CFA24F" />
+      <pointLight position={[15, 8, 15]} intensity={1.2} color="#FFFFFF" />
 
       {/* Kaaba at center */}
       <Box args={[2, 3, 2]} position={[0, 1.5, 0]} castShadow receiveShadow>
@@ -71,7 +72,7 @@ export const TawafScene = ({ progress }: { progress: number }) => {
       {/* Ground */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
         <planeGeometry args={[50, 50]} />
-        <meshStandardMaterial color="#0E3A2F" />
+        <meshStandardMaterial color="#C4A574" />
       </mesh>
 
       <OrbitControls

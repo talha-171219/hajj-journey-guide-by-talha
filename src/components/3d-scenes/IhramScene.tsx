@@ -14,9 +14,10 @@ export const IhramScene = ({ progress }: { progress: number }) => {
 
   return (
     <>
-      <ambientLight intensity={0.7} />
-      <directionalLight position={[5, 10, 5]} intensity={1} castShadow />
-      <pointLight position={[-5, 5, -5]} intensity={0.5} color="#CFA24F" />
+      <ambientLight intensity={1.8} />
+      <directionalLight position={[5, 10, 5]} intensity={2.5} castShadow />
+      <pointLight position={[-5, 5, -5]} intensity={1.5} color="#CFA24F" />
+      <pointLight position={[5, 8, 5]} intensity={1.2} color="#FFFFFF" />
 
       {/* Person figure (simplified) */}
       <group position={[0, 0, 0]}>
