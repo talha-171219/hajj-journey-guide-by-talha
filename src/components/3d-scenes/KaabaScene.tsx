@@ -19,9 +19,10 @@ export const KaabaScene = ({ progress }: { progress: number }) => {
 
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[10, 10, 5]} intensity={1} castShadow />
-      <pointLight position={[-10, 10, -10]} intensity={0.5} color="#CFA24F" />
+      <ambientLight intensity={1.2} />
+      <directionalLight position={[10, 10, 5]} intensity={2} castShadow />
+      <pointLight position={[-10, 10, -10]} intensity={1.5} color="#CFA24F" />
+      <pointLight position={[10, 5, 10]} intensity={1} color="#FFFFFF" />
 
       <group ref={groupRef}>
         {/* Kaaba */}
@@ -66,7 +67,7 @@ export const KaabaScene = ({ progress }: { progress: number }) => {
       {/* Ground */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.1, 0]} receiveShadow>
         <planeGeometry args={[50, 50]} />
-        <meshStandardMaterial color="#0E3A2F" />
+        <meshStandardMaterial color="#8B7355" />
       </mesh>
 
       <OrbitControls

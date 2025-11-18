@@ -35,11 +35,11 @@ const SceneSelector = ({ moduleId, progress }: ThreeSceneProps) => {
 
 export const ThreeScene = ({ moduleId, progress }: ThreeSceneProps) => {
   return (
-    <div className="w-full h-full bg-gradient-to-br from-islamic-green to-islamic-green-light">
+    <div className="w-full h-full bg-gradient-to-br from-sky-200 via-amber-50 to-orange-100">
       <Canvas
         shadows
         camera={{ position: [0, 5, 15], fov: 50 }}
-        gl={{ antialias: true, alpha: true }}
+        gl={{ antialias: true, alpha: false }}
       >
         <Suspense
           fallback={

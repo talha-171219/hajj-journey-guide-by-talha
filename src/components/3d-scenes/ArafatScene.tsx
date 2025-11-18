@@ -56,13 +56,14 @@ export const ArafatScene = ({ progress }: { progress: number }) => {
   return (
     <>
       {/* Dynamic lighting based on progress (day to evening) */}
-      <ambientLight intensity={0.5 + (progress / 100) * 0.3} />
+      <ambientLight intensity={1.5 + (progress / 100) * 0.3} />
       <directionalLight
         position={[20, 20, 10]}
-        intensity={1.2 - (progress / 100) * 0.5}
+        intensity={2.5 - (progress / 100) * 0.5}
         castShadow
         color={progress > 70 ? '#ff9966' : '#ffffff'}
       />
+      <pointLight position={[0, 15, 0]} intensity={1.5} color="#FFFFFF" />
 
       {/* Jabal Rahma (Mountain of Mercy) */}
       <group position={[0, 0, 5]}>

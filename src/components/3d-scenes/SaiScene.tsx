@@ -11,9 +11,10 @@ export const SaiScene = ({ progress }: { progress: number }) => {
 
   return (
     <>
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[5, 10, 5]} intensity={1} castShadow />
-      <directionalLight position={[-5, 10, -5]} intensity={0.5} />
+      <ambientLight intensity={1.5} />
+      <directionalLight position={[5, 10, 5]} intensity={2.5} castShadow />
+      <directionalLight position={[-5, 10, -5]} intensity={1.5} />
+      <pointLight position={[0, 8, 0]} intensity={1.2} color="#FFFFFF" />
 
       {/* Safa Hill (Green) */}
       <group position={[-10, 0, 0]}>
@@ -70,7 +71,7 @@ export const SaiScene = ({ progress }: { progress: number }) => {
       {/* Ground */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
         <planeGeometry args={[50, 50]} />
-        <meshStandardMaterial color="#1a3a2f" />
+        <meshStandardMaterial color="#B89968" />
       </mesh>
 
       <OrbitControls
