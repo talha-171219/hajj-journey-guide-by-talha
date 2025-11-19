@@ -23,6 +23,35 @@ export const InteractiveTask = ({ moduleId, onComplete }: InteractiveTaskProps) 
   const { language } = useLanguage();
 
   const taskConfigs: Record<string, TaskStep[]> = {
+      intro: [
+        {
+          id: '1',
+          label: {
+            en: 'Watch the introduction carefully',
+            bn: 'ভূমিকা মনোযোগ দিয়ে দেখুন',
+            ar: 'شاهد المقدمة بعناية'
+          },
+          completed: false
+        },
+        {
+          id: '2',
+          label: {
+            en: 'Read summary notes',
+            bn: 'সারাংশ নোট পড়ুন',
+            ar: 'اقرأ ملاحظات الملخص'
+          },
+          completed: false
+        },
+        {
+          id: '3',
+          label: {
+            en: 'Reflect for 2 minutes',
+            bn: '২ মিনিট ধ্যান করুন',
+            ar: 'تأمل لمدة دقيقتين'
+          },
+          completed: false
+        }
+      ],
     ihram: [
       {
         id: '1',
@@ -99,6 +128,26 @@ export const InteractiveTask = ({ moduleId, onComplete }: InteractiveTaskProps) 
         completed: false
       }
     ],
+      sai: [
+        {
+          id: '1',
+          label: {
+            en: 'Review the route between Safa and Marwa',
+            bn: 'সাফা ও মারওয়ার রুটটি পর্যালোচনা করুন',
+            ar: 'راجع المسار بين الصفا والمروة'
+          },
+          completed: false
+        },
+        {
+          id: '2',
+          label: {
+            en: 'Practice walking rhythm (simulated)',
+            bn: 'চলাফেরার তাল অনুশীলন করুন (সিমুলেটেড)',
+            ar: 'تدرب على إيقاع المشي (محاكاة)'
+          },
+          completed: false
+        }
+      ],
     muzdalifah: [
       {
         id: '1',
@@ -133,6 +182,46 @@ export const InteractiveTask = ({ moduleId, onComplete }: InteractiveTaskProps) 
           en: 'Shave or trim hair',
           bn: 'চুল কামান বা ছোট করুন',
           ar: 'حلق أو تقصير الشعر'
+        },
+        completed: false
+      }
+    ],
+    arafat: [
+      {
+        id: '1',
+        label: {
+          en: 'Learn recommended duas for Arafat',
+          bn: 'আরাফাতের জন্য সুপারিশকৃত দোয়া শিখুন',
+          ar: 'تعلم الأدعية الموصى بها ليوم عرفة'
+        },
+        completed: false
+      },
+      {
+        id: '2',
+        label: {
+          en: 'Spend time reflecting on intentions',
+          bn: 'নিয়তের উপর চিন্তা করার সময় নিন',
+          ar: 'اقضِ بعض الوقت في التأمل في النوايا'
+        },
+        completed: false
+      }
+    ],
+    completion: [
+      {
+        id: '1',
+        label: {
+          en: 'Download your completion certificate',
+          bn: 'আপনার সম্পূর্ণতার সার্টিফিকেট ডাউনলোড করুন',
+          ar: 'حمّل شهادة الإكمال'
+        },
+        completed: false
+      },
+      {
+        id: '2',
+        label: {
+          en: 'Share feedback about the module',
+          bn: 'মডিউল সম্পর্কে প্রতিক্রিয়া শেয়ার করুন',
+          ar: 'شارك ملاحظاتك حول الموديول'
         },
         completed: false
       }

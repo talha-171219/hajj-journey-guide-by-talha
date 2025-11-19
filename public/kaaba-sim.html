@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kaaba 3D Simulation - Recorder</title>
+  <style>html,body{height:100%;margin:0}canvas{display:block}</style>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module">
+    import * as THREE from 'https://unpkg.com/three@0.158.0/build/three.module.js';
+    import { GLTFLoader } from 'https://unpkg.com/three@0.158.0/examples/jsm/loaders/GLTFLoader.js';
+    import { OrbitControls } from 'https://unpkg.com/three@0.158.0/examples/jsm/controls/OrbitControls.js';
+    import { SkeletonUtils } from 'https://unpkg.com/three@0.158.0/examples/jsm/utils/SkeletonUtils.js';
+
+    // Settings
+    const DURATION = 25; // seconds
+    const FPS = 60; // target
+    const CLONES = 30; // number of characters
+    const RADIUS = 6; // meters from center
+
+    // Scene setup
+    const canvas = document.createElement('canvas');
+    document.body.appendChild(canvas);
+    const renderer = new THREE.WebGLRenderer({canvas, preserveDrawingBuffer:true, antialias:true});
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0b1020);
+
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 200);
+    camera.position.set(0, 30, 40);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.enabled = false;
+
+    // Lights
+    const amb = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(amb);
+    const sun = new THREE.DirectionalLight(0xffffff, 1.2);
+    sun.position.set(30, 50, 10);
+    sun.castShadow = true;
+    sun.shadow.camera.left = -30;
+    sun.shadow.camera.right = 30;
+    sun.shadow.camera.top = 30;
+    sun.shadow.camera.bottom = -30;
+    sun.shadow.mapSize.set(2048,2048);
+    scene.add(sun);
+
+    // Ground (marble) - expects `public/assets/3d/marble.jpg`
+    const textureLoader = new THREE.TextureLoader();
+    const marble = textureLoader.load('/assets/3d/marble.jpg');
+    marble.wrapS = marble.wrapT = THREE.RepeatWrapping;
+    marble.repeat.set(6,6);
+    const ground = new THREE.Mesh(new THREE.PlaneGeometry(120,120), new THREE.MeshStandardMaterial({map:marble}));
+    ground.rotation.x = -Math.PI/2;
+    ground.receiveShadow = true;
+    scene.add(ground);
+
+    // Load Kaaba GLB (expects /assets/3d/kaaba.glb)
+    const loader = new GLTFLoader();
+    const characterUrl = '/assets/3d/character.glb'; // mixamo exported GLB (walking in place)
+    const kaabaUrl = '/assets/3d/kaaba.glb';
+
+    let clock = new THREE.Clock();
+    let mixers = [];
+
+    async function initScene(){
+      const [kaabaGltf, charGltf] = await Promise.all([
+        loader.loadAsync(kaabaUrl),
+        loader.loadAsync(characterUrl)
+      ]);
+
+      // Kaaba
+      const kaaba = kaabaGltf.scene;
+      kaaba.traverse((c)=>{ if(c.isMesh){ c.castShadow=true; c.receiveShadow=true; }});
+      kaaba.scale.set(1.2,1.2,1.2);
+      kaaba.position.set(0,0,0);
+      scene.add(kaaba);
+
+      // Get walking animation from character gltf
+      const origChar = charGltf.scene;
+      const clip = (charGltf.animations && charGltf.animations[0]) || null;
+
+      // Prepare clones
+      for(let i=0;i<CLONES;i++){
+        const angle = (i/CLONES) * Math.PI*2;
+        const clone = SkeletonUtils.clone(origChar);
+        clone.position.set(Math.cos(angle)*RADIUS, 0, Math.sin(angle)*RADIUS);
+        clone.lookAt(0,0,0);
+        clone.traverse((c)=>{ if(c.isMesh){ c.castShadow=true; c.receiveShadow=false; }});
+        scene.add(clone);
+        if(clip){
+          const mixer = new THREE.AnimationMixer(clone);
+          mixers.push(mixer);
+          mixer.clipAction(clip).play();
+        }
+      }
+
+      animate();
+    }
+
+    // camera animation timeline
+    let startTime = performance.now();
+    function animate(){
+      requestAnimationFrame(animate);
+      const t = (performance.now() - startTime)/1000; // seconds
+
+      // camera orbit from aerial to close
+      const total = DURATION;
+      const pct = Math.min(1, t/total);
+      // start high, orbit, then descend
+      const orbit = pct < 0.7 ? (pct/0.7) : 1;
+      const theta = orbit * Math.PI*2*0.12; // small orbit
+      const radius = 40 - pct*28; // 40 -> 12
+      camera.position.x = Math.cos(theta)*radius;
+      camera.position.z = Math.sin(theta)*radius;
+      camera.position.y = 30 - pct*20; // 30 -> 10
+      camera.lookAt(0,4,0);
+
+      const delta = clock.getDelta();
+      mixers.forEach(m => m.update(delta));
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    // Recording helper: records from the canvas using MediaRecorder and returns base64 webm
+    window.recordSimulation = async function(durationSeconds = DURATION, fps = FPS){
+      return new Promise((resolve, reject)=>{
+        try{
+          const stream = renderer.domElement.captureStream(fps);
+          const rec = new MediaRecorder(stream, {mimeType: 'video/webm;codecs=vp9'});
+          const chunks = [];
+          rec.ondataavailable = (e)=>{ if(e.data && e.data.size) chunks.push(e.data); };
+          rec.onstop = async ()=>{
+            const blob = new Blob(chunks, {type:'video/webm'});
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              const base64 = reader.result.split(',')[1];
+              resolve(base64);
+            };
+            reader.readAsDataURL(blob);
+          };
+          rec.start();
+          setTimeout(()=>{
+            rec.stop();
+          }, durationSeconds*1000 + 200);
+        }catch(err){ reject(err); }
+      });
+    }
+
+    // handle resize
+    window.addEventListener('resize', ()=>{
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      camera.aspect = window.innerWidth/window.innerHeight;
+      camera.updateProjectionMatrix();
+    });
+
+    initScene().catch(err=>{ console.error(err); });
+  </script>
+</body>
+</html>

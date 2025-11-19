@@ -1,3 +1,4 @@
+// Clean quizzes data
 export interface QuizQuestion {
   id: string;
   question: {
@@ -159,6 +160,73 @@ export const quizzes: ModuleQuiz[] = [
           en: 'The Day of Arafat (9th Dhul Hijjah) is the most important day of Hajj. The Prophet said "Hajj is Arafat".',
           bn: 'আরাফাতের দিন (৯ জিলহজ্জ) হজ্জের সবচেয়ে গুরুত্বপূর্ণ দিন। নবী বলেছেন "হজ্জ হল আরাফাত"।',
           ar: 'يوم عرفة (9 ذو الحجة) هو أهم يوم في الحج. قال النبي "الحج عرفة".'
+        }
+      }
+    ]
+  },
+  {
+    moduleId: 'muzdalifah',
+    questions: [
+      {
+        id: 'muzdalifah_q1',
+        question: {
+          en: 'What is collected at Muzdalifah to use for Rami (stoning)?',
+          bn: 'রামির (পাথর ছোঁড়ায়) জন্য কি সংগ্রহ করা হয় মুজদালিফায়?',
+          ar: 'ماذا يجمع في مزدلفة لاستخدامه في الرمي؟'
+        },
+        options: {
+          en: ['Dates', 'Pebbles', 'Water', 'Leaves'],
+          bn: ['খেজুর', 'ছোট পাথর', 'পানি', 'পাতা'],
+          ar: ['تمور', 'حصى', 'ماء', 'أوراق']
+        },
+        correctAnswer: 1,
+        explanation: {
+          en: 'Pilgrims collect small pebbles in Muzdalifah which are later used for Rami (stoning).',
+          bn: 'যাত্রীরা মুজদালিফায় ছোট পাথর সংগ্রহ করেন যা পরে রামির জন্য ব্যবহার করা হয়।',
+          ar: 'يجمع الحجاج حصى صغيرة في مزدلفة والتي تُستخدم لاحقًا للرمي.'
+        }
+      }
+    ]
+  },
+  {
+    moduleId: 'completion',
+    questions: [
+      {
+        id: 'completion_q1',
+        question: {
+          en: 'Did the course help you understand the Hajj steps?',
+          bn: 'কোর্সটি কি আপনাকে হজ্জের ধাপগুলি বুঝতে সাহায্য করেছে?',
+          ar: 'هل ساعدك الكورس على فهم خطوات الحج؟'
+        },
+        options: {
+          en: ['Yes', 'Somewhat', 'No'],
+          bn: ['হ্যাঁ', 'কিছুটা', 'না'],
+          ar: ['نعم', 'إلى حد ما', 'لا']
+        },
+        correctAnswer: 0,
+        explanation: {
+          en: 'This is a feedback-style question; choose the option that best fits.',
+          bn: 'এটি একটি প্রতিক্রিয়া-ধাঁচের প্রশ্ন; যেই অপশনটি সবচেয়ে ভালো মানায় সেটি নির্বাচন করুন।',
+          ar: 'هذا سؤال على شكل ملاحظات؛ اختر الخيار الأنسب.'
+        }
+      },
+      {
+        id: 'completion_q2',
+        question: {
+          en: 'Would you recommend this app to others?',
+          bn: 'আপনি কি অন্যদের এই অ্যাপটি সুপারিশ করবেন?',
+          ar: 'هل ستوصي بهذا التطبيق للآخرين؟'
+        },
+        options: {
+          en: ['Yes', 'Maybe', 'No'],
+          bn: ['হ্যাঁ', 'হয়তো', 'না'],
+          ar: ['نعم', 'ربما', 'لا']
+        },
+        correctAnswer: 0,
+        explanation: {
+          en: 'Your feedback helps us improve the experience for others.',
+          bn: 'আপনার প্রতিক্রিয়া আমাদের অন্যদের জন্য অভিজ্ঞতা উন্নত করতে সাহায্য করে।',
+          ar: 'ملاحظاتك تساعدنا في تحسين التجربة للآخرين.'
         }
       }
     ]

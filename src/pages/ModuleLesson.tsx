@@ -11,6 +11,7 @@ import { ArrowLeft, Volume2, BookOpen, CheckCircle2 } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { quizzes } from '@/data/quizzes';
+import { modules } from '@/data/modules';
 import kaabaHero from '@/assets/kaaba-hero.jpg';
 import ihramImg from '@/assets/ihram.jpg';
 import arafatImg from '@/assets/arafat.jpg';
@@ -36,6 +37,9 @@ const ModuleLesson = () => {
     muzdalifah: ramiImg,
     completion: kaabaHero,
   };
+
+  const moduleMeta = modules.find((m) => m.id === moduleId);
+  const videoSrc = moduleMeta?.videoUrl;
 
   const handleVideoProgress = (percentage: number) => {
     if (percentage === 100 && moduleId) {
@@ -92,6 +96,7 @@ const ModuleLesson = () => {
               <VideoPlayer
                 thumbnailUrl={thumbnails[moduleId || 'intro']}
                 title={t(`module_${moduleId}`)}
+                videoSrc={videoSrc}
                 onProgress={handleVideoProgress}
               />
             )}
